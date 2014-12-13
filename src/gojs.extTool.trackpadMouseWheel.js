@@ -15,10 +15,11 @@ if (!trackpadMouseWheelTool) {
 	 *
 	 * @link http://www.gojs.net/latest/api/symbols/Tool.html#standardMouseWheel
 	 * @type {function}
+	 * @author greg.herrington@gmail.com
 	 */
 	var trackpadMouseWheelTool = (function (go, $log, debug) {
 
-		if (!go && !go.ToolManager) throw "GoJs not detected";
+		if (!go && !go.ToolManager) throw "GoJS not detected";
 
 		$log = $log || console;
 
@@ -37,7 +38,7 @@ if (!trackpadMouseWheelTool) {
 				wheelDelta = e.event.wheelDelta,
 				wheelDeltaX = e.event.wheelDeltaX,
 				wheelDeltaY = e.event.wheelDeltaY
-				;
+			;
 
 
 			if (debug) {
@@ -54,23 +55,17 @@ if (!trackpadMouseWheelTool) {
 				$log.error("    > e.alt   > ", e.alt);
 			}
 
-
-			// see if wheelDeltaX or Y are defined (expect that some browsers do not have these properties!)
-			// see if the absolute value of wheelDeltaX or Y is larger and record which is larger
-			// set delta = whichever one was larger
-			// if X is larger, then the if statement below
-			// should be using the horizontal scrolling path, and not the vertical one
-			// OR if you're feeling extra clever and both wheelDeltaX and Y are non-zero, scroll appropriately in both directions.
-
-
 			if (delta === 0) return;
+
 			if (!diagram.documentBounds.isReal()) return;
+
+
 			var cmd = diagram.commandHandler;
 			var wheelBehavior = diagram.toolManager.mouseWheelBehavior;
 
 			if (((wheelBehavior === go.ToolManager.WheelZoom && !e.shift) ||
-				(wheelBehavior === go.ToolManager.WheelScroll && (e.control || e.meta))) &&
-				(delta > 0 ? cmd.canIncreaseZoom() : cmd.canDecreaseZoom())) {
+			     (wheelBehavior === go.ToolManager.WheelScroll && (e.control || e.meta))) &&
+			     (delta > 0 ? cmd.canIncreaseZoom() : cmd.canDecreaseZoom())) {
 
 				// zoom in or out at current mouse point
 				var oldzoom = diagram.zoomPoint;
@@ -83,7 +78,7 @@ if (!trackpadMouseWheelTool) {
 				e.bubbles = false;
 
 			} else if ((wheelBehavior === go.ToolManager.WheelZoom && e.shift) ||
-				(wheelBehavior === go.ToolManager.WheelScroll && !(e.control || e.meta))) {
+			           (wheelBehavior === go.ToolManager.WheelScroll && !(e.control || e.meta))) {
 
 				var
 					oldpos = diagram.position.copy(),
