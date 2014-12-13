@@ -183,7 +183,7 @@ if (!trackpadMouseWheelTool) {
 		};
 
 
-	})(go, console, true);
+	})(go, console, false);
 
 }
 
