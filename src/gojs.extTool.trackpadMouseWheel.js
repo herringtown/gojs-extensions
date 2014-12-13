@@ -13,6 +13,9 @@ if (!trackpadMouseWheelTool) {
 	 *
 	 * overrides/extends diagram.toolManager.standardMouseWheel
 	 *
+	 *
+	 * @todo -- need to hook into IE's "wheel" event (in addition to currently listened for "mousewheel" and "DOMMouseScroll" events") for IE > 8 support...
+	 *
 	 * @link http://www.gojs.net/latest/api/symbols/Tool.html#standardMouseWheel
 	 * @type {function}
 	 * @author greg.herrington@gmail.com
