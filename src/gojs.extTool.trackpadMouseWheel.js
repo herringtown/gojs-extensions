@@ -15,6 +15,8 @@ if (!trackpadMouseWheelTool) {
 	 *
 	 *
 	 * @todo -- need to hook into IE's "wheel" event (in addition to currently listened for "mousewheel" and "DOMMouseScroll" events") for IE > 8 support...
+	 *  > https://stackoverflow.com/questions/10821985/detecting-mousewheel-on-the-x-axis-left-and-right-with-javascript/12850780#12850780
+	 *  > http://msdn.microsoft.com/en-us/library/ie/ff974352%28v=vs.85%29.aspx
 	 *
 	 * @link http://www.gojs.net/latest/api/symbols/Tool.html#standardMouseWheel
 	 * @type {function}
