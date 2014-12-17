@@ -6,10 +6,17 @@ if (!trackpadMouseWheelTool) {
 	 * Creates a new GoJs Tool that enables the trackpad to be used for omnidirectional
 	 * panning.  Currently, the standardMouseWheel tool evaluates wheelDelta behavior
 	 * that indicates north/south intentions.  This tool looks at the wheelDeltaX values
-	 * and directs the panning in the intended (combined) X/Y direction.
+	 * from the DOMMouseScroll and mousewheel events and directs the panning in the intended (combined) X/Y direction.
 	 *
 	 * It also gives meta key the same status as ctrl when altering the mousewheel behavior
-	 * to zoom instead of scroll (depending on the setting of diagram.toolManager.mouseWheelBehavior)
+	 * to zoom instead of scroll, or vice-versa (depending on the setting of diagram.toolManager.mouseWheelBehavior)
+	 *
+	 * When the diagram.toolManager.mouseWheelBehavior is set to go.ToolManager.WheelScroll the default mult-touch
+	 * 2-fingered swipe behavior is panning and the ctrl/meta modifiers will revert the behavior to zooming.  When
+	 * the diagram.toolManager.mouseWheelBehavior is set to go.ToolManager.WheelZoom, the inverse is true.
+	 *
+	 * This plugin dispenses with the shift-modifier for left/right panning b/c omni-panning mode precludes such
+	 * a modifier from being necessary.
 	 *
 	 * overrides/extends diagram.toolManager.standardMouseWheel
 	 *
