@@ -25,7 +25,7 @@ if (!trackpadMouseWheelTool) {
 
 		return function trackpadMouseWheel() {
 
-			$log.error(" > trackpadMouseWheel > ");
+			debug && $log.error(" > trackpadMouseWheel > ");
 
 			var diagram = this.diagram;
 			if (diagram === null) return;
