@@ -13,11 +13,6 @@ if (!trackpadMouseWheelTool) {
 	 *
 	 * overrides/extends diagram.toolManager.standardMouseWheel
 	 *
-	 *
-	 * @todo -- need to hook into IE's "wheel" event (in addition to currently listened for "mousewheel" and "DOMMouseScroll" events") for IE > 8 support...
-	 *  > https://stackoverflow.com/questions/10821985/detecting-mousewheel-on-the-x-axis-left-and-right-with-javascript/12850780#12850780
-	 *  > http://msdn.microsoft.com/en-us/library/ie/ff974352%28v=vs.85%29.aspx
-	 *
 	 * @link http://www.gojs.net/latest/api/symbols/Tool.html#standardMouseWheel
 	 * @type {function}
 	 * @author greg.herrington@gmail.com
@@ -30,15 +25,14 @@ if (!trackpadMouseWheelTool) {
 
 		return function trackpadMouseWheel() {
 
-			//$log.error(" > trackpadMouseWheel > ");
+			$log.error(" > trackpadMouseWheel > ");
 
 			var diagram = this.diagram;
 			if (diagram === null) return;
 
-			var e = diagram.lastInput;
-
 			// instead of this you will want to look at e.event.wheelDelta, e.event.wheelDeltaX, and e.event.wheelDeltaY, and decide what direction to scroll.
 			var
+				e = diagram.lastInput,
 				delta = e.delta,
 				wheelDelta = e.event.wheelDelta,
 				wheelDeltaX = e.event.wheelDeltaX,
@@ -68,9 +62,13 @@ if (!trackpadMouseWheelTool) {
 			var cmd = diagram.commandHandler;
 			var wheelBehavior = diagram.toolManager.mouseWheelBehavior;
 
-			if (((wheelBehavior === go.ToolManager.WheelZoom && !e.shift) ||
+			if (((wheelBehavior === go.ToolManager.WheelZoom && !(e.control || e.meta)) ||
 			     (wheelBehavior === go.ToolManager.WheelScroll && (e.control || e.meta))) &&
 			     (delta > 0 ? cmd.canIncreaseZoom() : cmd.canDecreaseZoom())) {
+
+
+				debug && $log.error(" > zoom mode");
+
 
 				// zoom in or out at current mouse point
 				var oldzoom = diagram.zoomPoint;
@@ -82,14 +80,14 @@ if (!trackpadMouseWheelTool) {
 				diagram.zoomPoint = oldzoom;
 				e.bubbles = false;
 
-			} else if ((wheelBehavior === go.ToolManager.WheelZoom && e.shift) ||
+			} else if ((wheelBehavior === go.ToolManager.WheelZoom && (e.control || e.meta)) ||
 			           (wheelBehavior === go.ToolManager.WheelScroll && !(e.control || e.meta))) {
 
 				var
 					oldpos = diagram.position.copy(),
 					cY     = diagram.scrollVerticalLineChange,
 					cX     = diagram.scrollHorizontalLineChange
-					;
+				;
 
 
 				/*______________________________________
@@ -105,6 +103,7 @@ if (!trackpadMouseWheelTool) {
 
 					// pretty much everything but IE (handles mousewheel, but uses a separate wheel event to expose deltaX/Y )
 
+					debug && $log.error(" >  omni-panning mode ...");
 
 					// no need to test for shift modifier here as we're explicitly handling directional changes via swipe direction
 					if (diagram.allowVerticalScroll) {
@@ -147,6 +146,8 @@ if (!trackpadMouseWheelTool) {
 					 |
 					 |
 					 */
+
+					debug && $log.error(" > reverting to standard GoJS tool behavior..")
 
 					var total = (delta > 0) ? delta : -delta;
 					// 48 pixels is normal (3 lines, 16*3)
