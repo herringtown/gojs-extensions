@@ -2,6 +2,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // @gh here's how you "decorate" a diagram with this mixin functionality :
 //    usage : actAsDiagramThatCanOptionallyDragEntireNodeBranches.call(diagram);
+////////////
 
 
 if (!createActAsDiagramThatCanOptionallyDragEntireNodeBranches) {
